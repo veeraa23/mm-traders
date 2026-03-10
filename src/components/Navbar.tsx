@@ -1,21 +1,17 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
-import { Menu, X, Wheat } from "lucide-react";
+import { Menu, X, Wheat, Globe } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useLang } from "@/context/LanguageContext";
 
-const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "How It Works", href: "#process" },
-  { label: "Gallery", href: "#gallery" },
-  { label: "Contact", href: "#contact" },
-];
+const navKeys = ["home", "about", "services", "process", "gallery", "contact"] as const;
+const navHrefs = ["#home", "#about", "#services", "#process", "#gallery", "#contact"];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { lang, setLang, t } = useLang();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -25,9 +21,10 @@ export default function Navbar() {
 
   const handleNav = (href: string) => {
     setOpen(false);
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
   };
+
+  const toggleLang = () => setLang(lang === "en" ? "ta" : "en");
 
   return (
     <header
@@ -64,17 +61,17 @@ export default function Navbar() {
                   scrolled ? "text-green-600" : "text-green-300"
                 )}
               >
-                Nathakottai, Ramnad
+                {lang === "en" ? "Nathakottai, Ramnad" : "நாதக்கோட்டை, ராம்நாட்"}
               </p>
             </div>
           </button>
 
           {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => (
+            {navKeys.map((key, i) => (
               <button
-                key={link.label}
-                onClick={() => handleNav(link.href)}
+                key={key}
+                onClick={() => handleNav(navHrefs[i])}
                 className={cn(
                   "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-green-600/20",
                   scrolled
@@ -82,29 +79,58 @@ export default function Navbar() {
                     : "text-white/90 hover:text-white"
                 )}
               >
-                {link.label}
+                {t.nav[key]}
               </button>
             ))}
+
+            {/* Language toggle */}
+            <button
+              onClick={toggleLang}
+              className={cn(
+                "ml-2 flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-semibold border transition-all duration-200",
+                scrolled
+                  ? "border-green-200 bg-green-50 text-green-700 hover:bg-green-100"
+                  : "border-white/25 bg-white/10 text-white hover:bg-white/20"
+              )}
+              title={lang === "en" ? "Switch to Tamil" : "Switch to English"}
+            >
+              <Globe className="w-3.5 h-3.5" />
+              {lang === "en" ? "தமிழ்" : "English"}
+            </button>
+
             <button
               onClick={() => handleNav("#contact")}
-              className="ml-4 px-5 py-2.5 bg-gradient-to-r from-green-600 to-green-700 text-white text-sm font-semibold rounded-xl hover:from-green-700 hover:to-green-800 transition-all duration-200 shadow-lg shadow-green-900/25 hover:shadow-green-900/40 hover:scale-105"
+              className="ml-3 px-5 py-2.5 bg-gradient-to-r from-green-600 to-green-700 text-white text-sm font-semibold rounded-xl hover:from-green-700 hover:to-green-800 transition-all duration-200 shadow-lg shadow-green-900/25 hover:scale-105"
             >
-              Get In Touch
+              {t.nav.cta}
             </button>
           </nav>
 
-          {/* Mobile toggle */}
-          <button
-            onClick={() => setOpen(!open)}
-            className={cn(
-              "lg:hidden p-2 rounded-lg transition-colors",
-              scrolled
-                ? "text-gray-700 hover:bg-gray-100"
-                : "text-white hover:bg-white/10"
-            )}
-          >
-            {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          {/* Mobile right side */}
+          <div className="lg:hidden flex items-center gap-2">
+            {/* Mobile language toggle */}
+            <button
+              onClick={toggleLang}
+              className={cn(
+                "flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all",
+                scrolled
+                  ? "border-green-200 bg-green-50 text-green-700"
+                  : "border-white/25 bg-white/10 text-white"
+              )}
+            >
+              <Globe className="w-3 h-3" />
+              {lang === "en" ? "தமிழ்" : "EN"}
+            </button>
+            <button
+              onClick={() => setOpen(!open)}
+              className={cn(
+                "p-2 rounded-lg transition-colors",
+                scrolled ? "text-gray-700 hover:bg-gray-100" : "text-white hover:bg-white/10"
+              )}
+            >
+              {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -112,24 +138,24 @@ export default function Navbar() {
       <div
         className={cn(
           "lg:hidden overflow-hidden transition-all duration-300",
-          open ? "max-h-[420px] opacity-100" : "max-h-0 opacity-0"
+          open ? "max-h-[460px] opacity-100" : "max-h-0 opacity-0"
         )}
       >
         <div className="bg-white/97 backdrop-blur-xl border-t border-green-100 px-4 pb-4 pt-2 shadow-xl">
-          {navLinks.map((link) => (
+          {navKeys.map((key, i) => (
             <button
-              key={link.label}
-              onClick={() => handleNav(link.href)}
+              key={key}
+              onClick={() => handleNav(navHrefs[i])}
               className="flex w-full text-left px-4 py-3 text-gray-700 font-medium hover:text-green-700 hover:bg-green-50 rounded-xl transition-colors"
             >
-              {link.label}
+              {t.nav[key]}
             </button>
           ))}
           <button
-            onClick={() => handleNav("#contact")}
+            onClick={() => { handleNav("#contact"); setOpen(false); }}
             className="mt-3 w-full py-3 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold rounded-xl hover:from-green-700 hover:to-green-800 transition-all"
           >
-            Get In Touch
+            {t.nav.cta}
           </button>
         </div>
       </div>

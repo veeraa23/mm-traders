@@ -17,7 +17,7 @@ export default function FloatingActions() {
     <>
       {/* WhatsApp floating button */}
       <a
-        href="https://wa.me/919876543210?text=Hello%20MM%20Traders%2C%20I%20am%20interested%20in%20your%20paddy%20trading%20services."
+        href="https://wa.me/919942519211?text=Hello%20MM%20Traders%2C%20I%20am%20interested%20in%20your%20paddy%20trading%20services."
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 left-6 z-50 w-14 h-14 bg-[#25D366] hover:bg-[#20BD5C] text-white rounded-full shadow-2xl shadow-green-900/30 flex items-center justify-center hover:scale-110 transition-all duration-300 group"
