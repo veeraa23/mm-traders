@@ -20,6 +20,12 @@ export const metadata: Metadata = {
   description:
     "MM Traders is a leading paddy trading and procurement business based in Nathakottai, Ramanathapuram (Ramnad), Tamil Nadu. We connect farmers, traders, and rice mills across South India.",
   keywords: "paddy trading, rice procurement, MM Traders, Nathakottai, Ramnad, Ramanathapuram, Tamil Nadu, rice mill supply, paddy supplier",
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/favicon.svg",
+  },
   openGraph: {
     title: "MM Traders | Trusted Paddy Procurement & Supply",
     description:

@@ -103,4 +103,21 @@
   .section-padding {
     padding: 5rem 1.5rem;
   }
+
+  /* ── Scroll Reveal Animations ── */
+  .reveal-base {
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+
+  .reveal-up    { opacity: 0; transform: translateY(40px); }
+  .reveal-left  { opacity: 0; transform: translateX(-40px); }
+  .reveal-right { opacity: 0; transform: translateX(40px); }
+  .reveal-fade  { opacity: 0; transform: none; }
+
+  .reveal-visible {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }

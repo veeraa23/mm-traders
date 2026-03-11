@@ -35,7 +35,7 @@ export default function WhyUs() {
             </h2>
             <p className="text-gray-500 text-lg leading-relaxed">{w.sub}</p>
             <div className="mt-8 p-6 bg-gradient-to-br from-green-600 to-green-800 rounded-3xl text-white shadow-2xl shadow-green-900/30">
-              <p className="text-5xl font-black mb-1" style={{ fontFamily: "var(--font-playfair)" }}>10+</p>
+              <p className="text-5xl font-black mb-1" style={{ fontFamily: "var(--font-playfair)" }}>15+</p>
               <p className="text-green-200 text-sm font-medium">{w.statLabel}</p>
             </div>
           </div>
